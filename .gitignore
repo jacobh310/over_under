@@ -1,0 +1,4 @@
+venv/
+.idea/
+.tmp.drivedownload/
+data_cleaning/.ipynb_checkpoints/
