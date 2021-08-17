@@ -87,7 +87,7 @@ def get_yearly_stats(year, path):
     """
     date_links = get_date_links(year)
     stats_df = pd.DataFrame(
-        columns=[f'Home AVG {i}' for i in range(1, 10)] + ['Home ERA'] + [f'Visit AVG {i}' for i in range(1, 10)] + [
+        columns=[f'Home OPS {i}' for i in range(1, 10)] + ['Home ERA'] + [f'Visit OPS {i}' for i in range(1, 10)] + [
             'Visit ERA'])
 
     i = 1
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     # stats_2018 = get_yearly_stats(year, PATH)
     # stats_2018.to_csv(f'yearly_stats\\{year}_stats.csv', index=False)
 
-    for year in range(2010, 2020):
+    for year in range(2016, 2022):
         print(year)
         stats_2018 = get_yearly_stats(year, PATH)
         stats_2018.to_csv(f'yearly_stats\\ops_{year}_stats.csv', index=False)
