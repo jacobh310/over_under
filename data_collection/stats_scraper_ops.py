@@ -73,7 +73,7 @@ def one_game_stats(url, date):
     home_pitch = [dfs[3].loc[0]['ERA']]
 
     stats = [date] + home_ops + home_pitch + away_ops + away_pitch + teams
-    stat_labels = ['Date'] + [f'Home OPS {i}' for i in range(1, 10)] + ['Home ERA'] + [f'Visit OPS{i}' for i in
+    stat_labels = ['Date'] + [f'Home OPS {i}' for i in range(1, 10)] + ['Home ERA'] + [f'Visit OPS {i}' for i in
                                                                                        range(1, 10)] + ['Visit ERA'] + [
                       'Visit Team', 'Home Team']
 
