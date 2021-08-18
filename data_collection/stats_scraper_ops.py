@@ -67,9 +67,9 @@ def one_game_stats(url, date):
     dfs = pd.read_html(html.text)
     dfs = [df for df in dfs if df.columns[0] in ['Hitters', 'Pitchers']]
 
-    away_ops = (dfs[0][lineup_away][:9]['OBP'] + dfs[0][lineup_away][:9]['OBP']).tolist()
+    away_ops = (dfs[0][lineup_away][:9]['OBP'] + dfs[0][lineup_away][:9]['SLG']).tolist()
     away_pitch = [dfs[1].loc[0]['ERA']]
-    home_ops = (dfs[2][lineup_home][:9]['OBP'] + dfs[2][lineup_home][:9]['OBP']).tolist()
+    home_ops = (dfs[2][lineup_home][:9]['OBP'] + dfs[2][lineup_home][:9]['SLG']).tolist()
     home_pitch = [dfs[3].loc[0]['ERA']]
 
     stats = [date] + home_ops + home_pitch + away_ops + away_pitch + teams
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     # stats_2018 = get_yearly_stats(year, PATH)
     # stats_2018.to_csv(f'yearly_stats\\{year}_stats.csv', index=False)
 
-    for year in range(2016, 2022):
+    for year in range(2010, 2022):
         print(year)
         stats_2018 = get_yearly_stats(year, PATH)
         stats_2018.to_csv(f'yearly_stats\\ops_{year}_stats.csv', index=False)
