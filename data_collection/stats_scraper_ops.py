@@ -39,8 +39,10 @@ def get_box_score_links(url, path):
     page = bs(driver.page_source, 'html.parser')
     driver.quit()
 
-    scores = page.find_all('a', {'name': '&lpos=mlb:scoreboard:boxscore'})
+    scores = page.find_all('a', {'class': 'AnchorLink Button Button--sm Button--anchorLink Button--alt mb4 w-100 mr2'})
     links = [f"https://www.espn.com{i['href']}" for i in scores]
+    links = [link for link in links if 'boxscore' in link]
+
     return links
 
 
@@ -67,10 +69,11 @@ def one_game_stats(url, date):
     dfs = pd.read_html(html.text)
     dfs = [df for df in dfs if df.columns[0] in ['Hitters', 'Pitchers']]
 
-    away_ops = (dfs[0][lineup_away][:9]['OBP'] + dfs[0][lineup_away][:9]['SLG']).tolist()
+    away_ops = (dfs[0][lineup_away][:9]['OBP'].astype('float64') + dfs[0][lineup_away][:9]['SLG'].astype('float64')).tolist()
     away_pitch = [dfs[1].loc[0]['ERA']]
-    home_ops = (dfs[2][lineup_home][:9]['OBP'] + dfs[2][lineup_home][:9]['SLG']).tolist()
+    home_ops = (dfs[2][lineup_home][:9]['OBP'].astype('float64') + dfs[2][lineup_home][:9]['SLG'].astype('float64')).tolist()
     home_pitch = [dfs[3].loc[0]['ERA']]
+
 
     stats = [date] + home_ops + home_pitch + away_ops + away_pitch + teams
     stat_labels = ['Date'] + [f'Home OPS {i}' for i in range(1, 10)] + ['Home ERA'] + [f'Visit OPS {i}' for i in
@@ -101,7 +104,9 @@ def get_yearly_stats(year, path):
                 temp_df = one_game_stats(box_score_link, date_link[-4:])
             except:
                 continue
-            stats_df = stats_df.append(temp_df)
+            stats_df = pd.concat([stats_df, temp_df], axis=0)
+
+        stats_df = stats_df.drop_duplicates()
 
     return stats_df
 
