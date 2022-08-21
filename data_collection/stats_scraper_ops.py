@@ -108,13 +108,13 @@ def get_yearly_stats(year, path):
 
 if __name__ == "__main__":
 
-    PATH = "D:\Github\over_under\data_collection\\chromedriver.exe"
+    PATH = "C:\Personal\Github\over_under\data_collection\\chromedriver.exe"
 
     # year = 2018
     # stats_2018 = get_yearly_stats(year, PATH)
     # stats_2018.to_csv(f'yearly_stats\\{year}_stats.csv', index=False)
 
-    for year in range(2010, 2022):
+    for year in range(2021, 2023):
         print(year)
         stats_2018 = get_yearly_stats(year, PATH)
         stats_2018.to_csv(f'yearly_stats\\ops_{year}_stats.csv', index=False)
